@@ -19,6 +19,24 @@ router.post("/add_record", async (req, res) => {
 		date: req.body.date,
 		time: req.body.time,
 	};
+		var currentDate = new Date();
+
+	// Get the current hours, minutes, and seconds
+	var hours = currentDate.getHours();
+	var minutes = currentDate.getMinutes();
+	var seconds = currentDate.getSeconds();
+	record.time = `${hours} : ${minutes}`;
+
+	var currentDate = new Date();
+
+	// Get the current date
+	var currentDay = currentDate.getDate();
+	var currentMonth = currentDate.getMonth() + 1; // Months are zero-indexed, so we add 1
+	var currentYear = currentDate.getFullYear();
+
+	// Display the current date in a formatted string
+	// console.log(currentYear + "-" + currentMonth + "-" + currentDay);
+	record.date = `${currentDay}-${currentMonth}-${currentYear}`;
 	try {
 		const data = await recordModel.create(record);
 		res.status(200).send({ data: data, msg: "Record stored in database😊" });
