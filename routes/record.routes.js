@@ -49,7 +49,9 @@ router.patch("/update_record/:id", async (req, res) => {
 	///:id===recordId---_id "id from current record "
 	const newrecord = req.body;
 	try {
-		const exist = await recordModel.findById({ _id: req.params.id });
+		// const exist = await recordModel.findById({ _id: req.params.id });
+		const data = new recordModel(record);
+		await data.save();
 		if (!exist) {
 			res.status(400).send("Record is not avilable!🤷‍♂️");
 		}
