@@ -19,7 +19,9 @@ router.post("/add_general_configure", async (req, res) => {
 		placeholder: req.body.font_size || "",
 	};
 	try {
-		const data = await generalModel.create(project);
+		// const data = await generalModel.create(project);
+		const data = new generalModel(project);
+		await data.save();
 		res
 			.status(200)
 			.send({ data: data, msg: "General data stored in database😊" });
