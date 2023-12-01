@@ -24,7 +24,9 @@ router.post("/add_display_configure", async (req, res) => {
 		horizontal_distance: req.body.horizontal_distance || "",
 	};
 	try {
-		const data = await displayModel.create(project);
+		// const data = await displayModel.create(project);
+		const data = new displayModel(project);
+		await data.save();
 		res
 			.status(200)
 			.send({ data: data, msg: "Display data stored in database😊" });
