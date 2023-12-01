@@ -38,7 +38,9 @@ router.post("/add_record", async (req, res) => {
 	// console.log(currentYear + "-" + currentMonth + "-" + currentDay);
 	record.date = `${currentDay}-${currentMonth}-${currentYear}`;
 	try {
-		const data = await recordModel.create(record);
+		// const data = await recordModel.create(record);
+		const data = new recordModel(record);
+		await data.save();
 		res.status(200).send({ data: data, msg: "Record stored in database😊" });
 	} catch (err) {
 		res.status(500).send({ error: err.message });
@@ -49,9 +51,8 @@ router.patch("/update_record/:id", async (req, res) => {
 	///:id===recordId---_id "id from current record "
 	const newrecord = req.body;
 	try {
-		// const exist = await recordModel.findById({ _id: req.params.id });
-		const data = new recordModel(record);
-		await data.save();
+		const exist = await recordModel.findById({ _id: req.params.id });
+		
 		if (!exist) {
 			res.status(400).send("Record is not avilable!🤷‍♂️");
 		}
