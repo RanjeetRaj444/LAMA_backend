@@ -18,13 +18,14 @@ router.post("/add_user", async (req, res) => {
 		email: req.body.email || "",
 	};
 	try {
-		// const exist = await userModel.findOne({ name: project.name });
-		// if (exist)
-		// 	res.status(200).send({ project: exist, msg: "User is already exist!😒" });
-		// const data = await userModel.create(project);
-		const data = new userModel(project);
-		await data.save();
-		res.status(200).send({ data: data, msg: "User stored in database😊" });
+		const exist = await userModel.findOne({ name: project.name });
+		if (exist)
+			res.status(200).send({ data: exist, msg: "Project is already exist!👍" });
+		else {
+			const data = new userModel(project);
+			await data.save();
+			res.status(200).send({ data: data, msg: "User stored in database😊" });
+		}
 	} catch (err) {
 		res.status(500).send({ error: err.message });
 	}
